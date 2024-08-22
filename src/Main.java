@@ -14,12 +14,12 @@ public class Main {
     static void checkLoginAndPass(String login, String password, String confirmPass) {
         if (login.length() > 20 || checkSymbol(login) != login.length()) {
             throw new RuntimeException("WrongLoginException.");
-        } //else { System.out.println("login " + login + " - OK"); }
+        } else { System.out.println("login " + login + " - OK"); }
         if (password.length() > 20 ||
-                ((checkSymbol(password) + checkNumber(password)) < password.length()) ||
+                checkSymbolAndNumber(password) < password.length() ||
                 (!(password.equals(confirmPass)))) {
             throw new RuntimeException("WrongPasswordException.");
-        } //else { System.out.println("Password " + password + " - OK"); }
+        } else { System.out.println("Password " + password + " - OK"); }
     }
 
     public static int checkSymbol(String word) {
@@ -32,8 +32,8 @@ public class Main {
         }
         return count;
     }
-    public static int checkNumber(String word) {
-        int count = 0;
+    public static int checkSymbolAndNumber(String word) {
+        int count = checkSymbol(word);
         char[] symbols = word.toCharArray();
         for (char temp : symbols) {
             if ((int) temp > 47 && (int) temp < 58) { count++; }
