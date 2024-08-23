@@ -1,31 +1,35 @@
+import java.sql.SQLOutput;
+import java.util.regex.Pattern;
+
 public class Main {
 
     //static Pattern pattern = Pattern.compile("[a-zA-Z]");
 
     public static void main(String[] args) {
 
-        String login = "Alex_Nikki";
+        String login = "Alex_Niki";
         String password = "AsdfskdjfJHV3245";
         String confirmPass = "AsdfskdjfJHV3245";
         try {
             checkLoginAndPass(login, password, confirmPass);
-        } catch (RuntimeException ex) {
+        } catch (WrongLoginException ex) {
+            System.out.println(ex);
+        } catch (WrongPasswordException ex) {
             System.out.println(ex);
         } finally {
             System.out.println("Check is end.");
         }
-
     }
 
     static void checkLoginAndPass(String login, String password, String confirmPass) {
         if (login.length() > 20 || checkSymbol(login) != login.length()) {
-            throw new RuntimeException("WrongLoginException.");
-        } //else { System.out.println("login " + login + " - OK"); }
+            throw new WrongLoginException();
+        }
         if (password.length() > 20 ||
                 checkPass(password) < password.length() ||
                 (!(password.equals(confirmPass)))) {
-            throw new RuntimeException("WrongPasswordException.");
-        } //else { System.out.println("Password " + password + " - OK"); }
+            throw new WrongPasswordException();
+        }
     }
 
     public static int checkSymbol(String word) {
